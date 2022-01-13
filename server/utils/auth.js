@@ -1,3 +1,4 @@
+// ADJUSTED SO JWT AND TOKEN CAN BE PROPERLY USED
 const jwt = require("jsonwebtoken");
 
 // set token secret and expiration date
