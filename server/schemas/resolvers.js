@@ -41,30 +41,37 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
-
       const correctPw = await user.isCorrectPassword(password);
-
       if (!correctPw) {
         throw new AuthenticationError("Incorrect Password");
       }
-
       const token = signToken(user);
-
       return { token, user };
     },
     // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
+    saveBook: async (parent, { bookInput }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: {
+              savedBooks: input,
+            },
+          }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
 
     // remove a book from `savedBooks`
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-        const updatedUserBooks = await User.findOneAndUpdate(
+        return User.findOneAndUpdate(
           { _id: context.user._id },
           {
             $pull: { savedBooks: { bookId } },
           }
         );
-
-        return updatedUserBooks;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
