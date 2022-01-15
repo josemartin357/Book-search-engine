@@ -1,9 +1,12 @@
-// SignupForm.js: Replace the addUser() functionality imported from the API file with the ADD_USER mutation functionality.
+// Replaced the addUser() functionality imported from the API file with the ADD_USER mutation functionality.
 
+// importing functionality to add user
+import { ADD_USER } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 
-import { createUser } from "../utils/API";
+// import { createUser } from "../utils/API";
 import Auth from "../utils/auth";
 
 const SignupForm = () => {
@@ -13,6 +16,10 @@ const SignupForm = () => {
     email: "",
     password: "",
   });
+
+  // MB: USING MUTATION ADD_USER
+  const [addUser, { error }] = useMutation(ADD_USER);
+
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -25,24 +32,28 @@ const SignupForm = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    console.log(userFormData);
 
     // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
 
+    // MB: REFACTORED THIS
     try {
-      const response = await createUser(userFormData);
+      const { data } = await addUser({
+        variables: { ...userFormData },
+      });
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
+      // if (error) {
+      //   throw new Error("something went wrong!");
+      // }
 
-      const { token, user } = await response.json();
-      console.log(user);
-      Auth.login(token);
+      // const { token, user } = await response.json();
+      // console.log(user);
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
