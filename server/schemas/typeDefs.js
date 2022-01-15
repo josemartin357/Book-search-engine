@@ -1,6 +1,8 @@
+// DONE: Added necessary Query and Mutation types
+// NOTE: Created an input type in saveBook mutation to handle all the parameters needed
+
 const { gql } = require("apollo-server-express");
 
-// Added necessary Query and Mutation types
 const typeDefs = gql`
   type Book {
     bookId: String!

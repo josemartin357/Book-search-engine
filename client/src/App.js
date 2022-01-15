@@ -1,3 +1,5 @@
+// DONE: Created Apollo Provider to make every request work with the Apollo Server.
+
 // ApolloClient: library for JS that enables you to manage data with GraphQL
 import {
   ApolloClient,

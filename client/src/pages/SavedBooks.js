@@ -1,4 +1,4 @@
-// Use the useMutation() Hook to execute the REMOVE_BOOK mutation in the handleDeleteBook() function instead of the deleteBook() function that's imported from API file. (Make sure you keep the removeBookId() function in place!)
+// DONE: Used the useMutation() Hook to execute the REMOVE_BOOK mutation in the handleDeleteBook() function instead of the deleteBook() function that's imported from API file.
 
 // With useEffect hook, you tell React that your component needs to do something after render.
 // The useQuery React hook is the primary API for executing queries in an Apollo application
@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 import { GET_ME } from "../utils/queries";
 import { REMOVE_BOOK } from "../utils/mutations";
-import { getMe, deleteBook } from "../utils/API";
+// import { getMe, deleteBook } from "../utils/API";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
@@ -25,7 +25,6 @@ const SavedBooks = () => {
 
   // MB: SETTING UP useQuery
   const { loading, data } = useQuery(GET_ME);
-
   const userData = data?.me || [];
 
   // useState for userData

@@ -1,4 +1,4 @@
-// Replaced the addUser() functionality imported from the API file with the ADD_USER mutation functionality.
+// DONE: Replaced the addUser() functionality imported from the API file with the ADD_USER mutation functionality.
 
 // importing functionality to add user
 import { ADD_USER } from "../utils/mutations";

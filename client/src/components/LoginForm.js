@@ -1,4 +1,4 @@
-// LoginForm.js: Replace the loginUser() functionality imported from the API file with the LOGIN_USER mutation functionality.
+// DONE: Replaced the loginUser() functionality imported from the API file with the LOGIN_USER mutation functionality.
 
 // see SignupForm.js for comments
 import { LOGIN_USER } from "../utils/mutations";

@@ -1,4 +1,4 @@
-// Added query GET_ME to execute the "me" query set up using Apollo Server
+// DONE: Added query GET_ME to execute the "me" query set up using Apollo Server
 
 import { gql } from "@apollo/client";
 

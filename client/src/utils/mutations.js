@@ -1,3 +1,5 @@
+// DONE: Added necesary mutations
+
 import { gql } from "@apollo/client";
 
 // LOGIN_USER will execute the loginUser mutation set up using Apollo Server; which at the same time will pass a token

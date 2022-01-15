@@ -1,3 +1,4 @@
+// DONE
 // NOTES: needed to install: npm install apollo-server graphql
 // TO RUN: npm from the root folder, then npm run develop
 
