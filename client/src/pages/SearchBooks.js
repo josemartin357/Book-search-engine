@@ -1,7 +1,6 @@
-// Use the Apollo useMutation() Hook to execute the SAVE_BOOK mutation in the handleSaveBook() function instead of the saveBook() function imported from the API file.
-
-// Make sure you keep the logic for saving the book's ID to state in the try...catch block!
-
+// Use the Apollo useMutation() Hook to execute the SAVE_BOOK mutation in the handleSaveBook() function instead of the saveBook() function imported from the API file
+import { useMutation, useQuery } from "@apollo/client";
+import { SAVE_BOOK } from "../utils/mutations";
 import React, { useState, useEffect } from "react";
 import {
   Jumbotron,
@@ -18,11 +17,12 @@ import { saveBook, searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 
 const SearchBooks = () => {
+  // MB: USING MUTATION saveBook
+  const [saveBook, { error }] = useMutation(SAVE_BOOK);
   // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
-
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
@@ -76,10 +76,13 @@ const SearchBooks = () => {
       return false;
     }
 
+    // MB: REFACTORED THIS
     try {
-      const response = await saveBook(bookToSave, token);
+      const { data } = await saveBook({
+        variables: { input: bookToSave },
+      });
 
-      if (!response.ok) {
+      if (error) {
         throw new Error("something went wrong!");
       }
 
