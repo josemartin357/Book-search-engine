@@ -1,5 +1,6 @@
 const { gql } = require("apollo-server-express");
 
+// Added necessary Query and Mutation types
 const typeDefs = gql`
   type Book {
     bookId: String!

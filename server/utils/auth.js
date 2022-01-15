@@ -1,4 +1,4 @@
-// NOTE: ADJUSTED SO JWT AND TOKEN CAN BE PROPERLY USED
+// NOTE: ADJUSTED TO BE ABLE TO USE GRAPHQL AND JWT
 const jwt = require("jsonwebtoken");
 
 // set token secret and expiration date

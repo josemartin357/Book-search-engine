@@ -1,3 +1,5 @@
+// STATUS: Pending query and mutation functionality
+
 const { AuthenticationError } = require("apollo-server-express");
 const { User } = require("../models");
 const { signToken } = require("../utils/auth");
