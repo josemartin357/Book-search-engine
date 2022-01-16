@@ -8,24 +8,6 @@ This is a MERN stack app that uses Google Books API to search for books. In addi
 
 https://googlebooksretriever.herokuapp.com/
 
-
-## Screenshots samples
-Desktop View
-
-
-![googlebooks-desktop](https://user-images.githubusercontent.com/83382332/149650922-9862a0b3-1f39-4773-bfec-762110147247.jpg)
-
-<br/>
-Table View
-
-
-![googlebooks-tablet](https://user-images.githubusercontent.com/83382332/149650925-005fa315-ebc7-418b-990f-e36daf85908a.jpg)
-
-<br/>
-Mobile View
-
-
-![googlebooks-mobile](https://user-images.githubusercontent.com/83382332/149650926-1f66fd27-b394-4b27-a375-cb8409b2d6a5.jpg)
 ## Table of Contents
 * [Installation](#installation)
 * [Technologies Used](#builtwith)
@@ -88,3 +70,21 @@ Use information below to contact me for questions or future collaboration.
 GitHub: https://github.com/josemartin357
 <br/>
 Email: martin.bedoya2021@gmail.com
+
+
+## Screenshots samples
+Desktop View
+
+
+![googlebooks-desktop](https://user-images.githubusercontent.com/83382332/149650922-9862a0b3-1f39-4773-bfec-762110147247.jpg)
+
+<br/>
+Table View
+
+![googlebooks-tablet](https://user-images.githubusercontent.com/83382332/149650925-005fa315-ebc7-418b-990f-e36daf85908a.jpg)
+
+<br/>
+Mobile View
+
+![googlebooks-mobile](https://user-images.githubusercontent.com/83382332/149650926-1f66fd27-b394-4b27-a375-cb8409b2d6a5.jpg)
+
