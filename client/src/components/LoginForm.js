@@ -10,7 +10,7 @@ import Auth from "../utils/auth";
 
 const LoginForm = () => {
   // MB: USING MUTATION LOGIN_USER
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [login, { error }] = useMutation(LOGIN_USER);
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -25,16 +25,17 @@ const LoginForm = () => {
     console.log(userFormData);
 
     // check if form has everything (as per react-bootstrap docs)
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     try {
       const { data } = await login({
         variables: { ...userFormData },
       });
+      console.log(data);
       Auth.login(data.login.token);
       // if (!response.ok) {
       //   throw new Error("something went wrong!");
@@ -101,7 +102,6 @@ const LoginForm = () => {
         >
           Submit
         </Button>
-        {error && <div>Login failed</div>}
       </Form>
     </>
   );

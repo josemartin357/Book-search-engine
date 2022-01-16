@@ -35,11 +35,11 @@ const SignupForm = () => {
     console.log(userFormData);
 
     // check if form has everything (as per react-bootstrap docs)
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     // MB: REFACTORED THIS
     try {
@@ -53,6 +53,7 @@ const SignupForm = () => {
 
       // const { token, user } = await response.json();
       // console.log(user);
+      console.log(data);
       Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);

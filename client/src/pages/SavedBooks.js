@@ -3,7 +3,7 @@
 // With useEffect hook, you tell React that your component needs to do something after render.
 // The useQuery React hook is the primary API for executing queries in an Apollo application
 import { useQuery, useMutation } from "@apollo/client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Jumbotron,
   Container,
@@ -25,7 +25,7 @@ const SavedBooks = () => {
 
   // MB: SETTING UP useQuery
   const { loading, data } = useQuery(GET_ME);
-  const userData = data?.me || [];
+  const userData = data?.me || {};
 
   // useState for userData
   // const [userData, setUserData] = useState({});

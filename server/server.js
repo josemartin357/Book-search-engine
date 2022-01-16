@@ -5,7 +5,7 @@
 const express = require("express");
 const path = require("path");
 const db = require("./config/connection");
-const routes = require("./routes");
+// const { authMiddleware } = require("./utils/auth");
 // Requiring Apollo Server
 const { ApolloServer } = require("apollo-server-express");
 // Requiring schemas: typeDefs and resolvers
@@ -14,13 +14,28 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Setting-up ApolloServer
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
+// const server = new ApolloServer({
+//   typeDefs,
+//   resolvers,
+//   context: authMiddleware,
+// });
 
-// Setting-up middleware
-server.applyMiddleware({ app });
+// // Setting-up middleware
+// server.applyMiddleware({ app });
+
+const startServer = async () => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+
+  await server.start();
+
+  server.applyMiddleware({ app });
+  return server;
+};
+
+// const server = startServer();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -35,7 +50,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-db.once("open", () => {
+db.once("open", async () => {
+  server = await startServer();
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);
     // log where we can go to test our GQL API
