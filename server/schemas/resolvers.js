@@ -19,11 +19,14 @@ const resolvers = {
     // user: async (parent, { username }) => {
     //   return User.findOne({ username }).populate("savedBooks");
     // },
+    // Adding context in the query to get the logged-in user info
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("savedBooks");
+        return await User.findOne({ _id: context.user._id }).populate(
+          "savedBooks"
+        );
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("Please log-in");
     },
   },
 
@@ -49,16 +52,21 @@ const resolvers = {
       return { token, user };
     },
     // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
-    saveBook: async (parent, { bookInput }, context) => {
+    saveBook: async (parent, { bookData }, context) => {
       if (context.user) {
-        return User.findOneAndUpdate(
+        const updateUserBooks = await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: {
-              savedBooks: input,
+            $push: {
+              savedBooks: bookData,
             },
+          },
+          {
+            new: true,
+            runValidation: true,
           }
         );
+        return updateUserBooks;
       }
       throw new AuthenticationError("You need to be logged in!");
     },

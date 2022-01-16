@@ -1,11 +1,11 @@
-// DONE
 // NOTES: needed to install: npm install apollo-server graphql
-// TO RUN: npm from the root folder, then npm run develop
+// NOTES: had to run "npm install @apollo/client graphql" and "npm i graphql@15.8.0 -E"
+// TO RUN: npm i from the root folder, then npm run build, then npm run develop
 
 const express = require("express");
 const path = require("path");
 const db = require("./config/connection");
-// const { authMiddleware } = require("./utils/auth");
+const { authMiddleware } = require("./utils/auth");
 // Requiring Apollo Server
 const { ApolloServer } = require("apollo-server-express");
 // Requiring schemas: typeDefs and resolvers
@@ -27,6 +27,7 @@ const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: authMiddleware,
   });
 
   await server.start();

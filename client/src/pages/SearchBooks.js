@@ -84,7 +84,7 @@ const SearchBooks = () => {
     // MB: REFACTORED THIS
     try {
       const { data } = await saveBook({
-        variables: { input: bookToSave },
+        variables: { bookData: { ...bookToSave } },
         // { bookData: { ...bookToSave } },
       });
 
