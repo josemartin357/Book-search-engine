@@ -6,37 +6,28 @@ const express = require("express");
 const path = require("path");
 const db = require("./config/connection");
 const { authMiddleware } = require("./utils/auth");
-// Requiring Apollo Server
+// Import the ApolloServer class
 const { ApolloServer } = require("apollo-server-express");
-// Requiring schemas: typeDefs and resolvers
+// Import the two parts of a GraphQL schema
 const { typeDefs, resolvers } = require("./schemas");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Setting-up ApolloServer
-// const server = new ApolloServer({
-//   typeDefs,
-//   resolvers,
-//   context: authMiddleware,
-// });
-
-// // Setting-up middleware
-// server.applyMiddleware({ app });
-
+// NOTE: kept getting Error: You must `await server.start()` before calling `server.applyMiddleware()`. Fixed by creating a function below.
 const startServer = async () => {
+  // Create a new instance of an Apollo server with the GraphQL schema
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    // Add context to our server so data from the `authMiddleware()` function can pass data to our resolver functions
     context: authMiddleware,
   });
 
   await server.start();
-
+  // Update Express.js to use Apollo server features
   server.applyMiddleware({ app });
   return server;
 };
-
-// const server = startServer();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -52,6 +43,7 @@ app.get("*", (req, res) => {
 });
 
 db.once("open", async () => {
+  // calling and awaiting function that starts server
   server = await startServer();
   app.listen(PORT, () => {
     console.log(`API server running on port ${PORT}!`);

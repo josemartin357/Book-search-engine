@@ -1,6 +1,7 @@
-// DONE: Added necessary Query and Mutation types
+// Added necessary Query and Mutation types
 // NOTE: Created an input type in saveBook mutation to handle all the parameters needed
 
+// gql is a tag used to pass queries to apollo client
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`

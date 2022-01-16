@@ -1,37 +1,27 @@
-// STATUS: Pending query and mutation functionality
-
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Book } = require("../models");
 const { signToken } = require("../utils/auth");
 
 // resolvers.js: Define the query and mutation functionality to work with the Mongoose models.
-// Use the functionality in the user-controller.js as a guide.
 // With a resolver we populate the data for a GraphQL query
 const resolvers = {
   Query: {
-    // get a single user by either their id or their username
-    // users: async () => {
-    //   return User.find();
-    // },
-    // user: async (parent, { userId }) => {
-    //   return User.findOne({ _id: userId });
-    // },
-    // user: async (parent, { username }) => {
-    //   return User.findOne({ username }).populate("savedBooks");
-    // },
-    // Adding context in the query to get the logged-in user info
+    // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, args, context) => {
       if (context.user) {
         return await User.findOne({ _id: context.user._id }).populate(
           "savedBooks"
         );
+        // ANOTHER WAY: Some online users say they have used the versionKey from mongoose "__v"
+        // return await User.findOne({ _id: context.user._id }).select(
+        //   "-__v -password"
+        // );
       }
       throw new AuthenticationError("Please log-in");
     },
   },
 
   Mutation: {
-    // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
     addUser: async (parent, args) => {
       const user = await User.create(args);
       const token = signToken(user);
@@ -53,32 +43,34 @@ const resolvers = {
     },
     // save a book to a user's `savedBooks` field by adding it to the set (to prevent duplicates)
     saveBook: async (parent, { bookData }, context) => {
+      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       if (context.user) {
         const updateUserBooks = await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $push: {
+            $addToSet: {
               savedBooks: bookData,
             },
           },
           {
             new: true,
-            runValidation: true,
+            runValidators: true,
           }
         );
         return updateUserBooks;
       }
+      // If user attempts to execute this mutation and isn't logged in, throw an error
       throw new AuthenticationError("You need to be logged in!");
     },
-
-    // remove a book from `savedBooks`
+    // Set up mutation so a logged in user can only remove a book from their `savedBooks` and no one else's
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
-        return User.findOneAndUpdate(
+        return await User.findOneAndUpdate(
           { _id: context.user._id },
           {
             $pull: { savedBooks: { bookId } },
-          }
+          },
+          { new: true }
         );
       }
       throw new AuthenticationError("You need to be logged in!");
