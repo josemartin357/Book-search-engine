@@ -26,8 +26,6 @@ Mobile View
 
 
 ![googlebooks-mobile](https://user-images.githubusercontent.com/83382332/149650926-1f66fd27-b394-4b27-a375-cb8409b2d6a5.jpg)
-
-
 ## Table of Contents
 * [Installation](#installation)
 * [Technologies Used](#builtwith)
